@@ -31,7 +31,7 @@ $ docker build . -t golang-api:latest
 Run the following command to start the container and access it from your local machine
 
 ```bash
-$ docker run -d -p 80:80 go-multi-stage
+$ docker run -d -p 80:80 golang-api:latest
 ```
 
 Navigate in your web browser to `localhost:80` to get the JSON response. Alternatively, run the following command to get the response in a terminal
