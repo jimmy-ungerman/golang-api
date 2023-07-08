@@ -61,9 +61,26 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            ghcr.io/jimmy-ungerman/golang-api
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=sha
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
-          tags: ghcr.io/jimmy-ungerman/golang-api:latest
+          tags: ${{ steps.meta.outputs.tags }}
+      # - name: Run Snyk to check Docker image for vulnerabilities
+      #   uses: snyk/actions/docker@master
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #   with:
+      #     image: golang-api:${{ github.sha }}
+      #     args: --severity-threshold=high
