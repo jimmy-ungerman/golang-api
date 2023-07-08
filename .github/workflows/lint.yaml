@@ -66,4 +66,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: gchr.io/jimmy-ungerman/golang-api:latest
+          tags: ghcr.io/jimmy-ungerman/golang-api:latest
