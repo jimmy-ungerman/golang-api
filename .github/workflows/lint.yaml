@@ -85,3 +85,11 @@ jobs:
         with:
           image: ${{ steps.meta.outputs.tags }}
           args: --severity-threshold=high
+        # Push if the scan succeeds
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: false
+          load: true
+          tags: ${{ steps.meta.outputs.tags }}
