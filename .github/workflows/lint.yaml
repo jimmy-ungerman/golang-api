@@ -82,5 +82,5 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: ghcr.io/jimmy-ungerman/golang-api:${{ steps.meta.outputs.tags }}
+          image: ${{ steps.meta.outputs.tags }}
           args: --severity-threshold=high
