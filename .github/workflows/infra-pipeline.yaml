@@ -4,19 +4,18 @@ on:
   push:
     branches:
     - main
-    paths: 
-    - infra/**
+    # paths: 
+    # - infra/**
   pull_request:
     branches:
     - main
-    paths: 
-    - infra/**
+    # paths: 
+    # - infra/**
 
 jobs: 
   terraform:
     runs-on: ubuntu-latest
     name: Terraform
-    environment: staging 
     steps:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
@@ -31,3 +30,4 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: us-east-1
       working-directory: infra
+      shell: bash
