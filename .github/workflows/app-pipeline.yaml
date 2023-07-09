@@ -135,3 +135,24 @@ jobs:
       
       - name: Deploy new Image
         run: helm upgrade --install golang-api charts/golang-api --set image.tag=${{ steps.sha.outputs.sha_short }}
+
+  verify-deployment:
+    name: Verify API is up
+    runs-on: ubuntu-latest
+    needs: ["deploy"]
+
+    steps:
+      - name: Setup Kubectl
+        uses: azure/setup-kubectl@v3
+      
+      - name: Get API URL
+        run: |
+          URL=$(kubectl get services -n default golang-api --output jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+
+          response=$(curl -s -w "%{http_code}" $URL)
+
+          http_code=$(tail -n1 <<< "$response")
+          content=$(sed '$ d' <<< "$response")   
+
+          if [[ "$http_code" == "200" ]] && [[ "$content" == ""{\"message\":\"Automate all the things,\"time\":1688943610}\""" ]]; then
+            echo "API returns 200 Status Code and Correct Reponse"
