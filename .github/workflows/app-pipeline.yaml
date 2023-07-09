@@ -134,7 +134,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set EKS Kubeconfig 
-        run: aws eks update-kubeconfig --region $AWS_REGION --name golang-api-demo
+        run: "aws eks update-kubeconfig --region $AWS_REGION --name golang-api-demo"
       
       - name: Deploy new Image
         run: helm upgrade --install golang-api charts/golang-api --set image.tag=${{ steps.meta.outputs.tags }}
