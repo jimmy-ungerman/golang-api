@@ -43,7 +43,7 @@ jobs:
   test:
     name: Test Golang API
     runs-on: ubuntu-latest
-    needs: ["lint"]
+    # needs: ["lint"]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
