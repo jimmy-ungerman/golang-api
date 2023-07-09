@@ -24,11 +24,13 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.5.2
         terraform_wrapper: false
+
     - name: Terraform Init
       id: init
       run: terraform init
@@ -40,4 +42,10 @@ jobs:
       run: |
         terraform plan -input=false -no-color -out tf.plan
       working-directory: infra
+      shell: bash
+
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply -input=false tf.plan
+      working-directory: infra # Use your environment folder
       shell: bash
