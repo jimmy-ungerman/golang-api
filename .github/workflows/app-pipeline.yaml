@@ -15,31 +15,20 @@ env:
   AWS_REGION: us-east-1
 
 jobs:
-  lint:
-    name: Lint Golang API
+  golangci:
+    name: lint
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      packages: read
-      statuses: write
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
         with:
-          fetch-depth: 0
+          go-version: '1.20'
+          cache: false
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.53
 
-      - name: Lint Code Base
-        uses: super-linter/super-linter@v5
-        env:
-          # Allows us to only lint when files have been changed
-          VALIDATE_ALL_CODEBASE: true
-          # Only lint our Go Code
-          VALIDATE_GO: true
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
   # test:
   #   name: Test Golang API
   #   runs-on: ubuntu-latest
