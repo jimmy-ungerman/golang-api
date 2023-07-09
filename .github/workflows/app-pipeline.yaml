@@ -124,6 +124,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Set EKS Kubeconfig 
-      #   run: aws eks update-kubeconfig --region $AWS_REGION --name golang-api-demo && kubectl get nodes
+      - name: Set EKS Kubeconfig 
+        run: aws eks update-kubeconfig --region $AWS_REGION --name golang-api-demo && kubectl get nodes
 
