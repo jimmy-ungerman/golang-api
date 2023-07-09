@@ -144,7 +144,10 @@ jobs:
     steps:
       - name: Setup Kubectl
         uses: azure/setup-kubectl@v3
-      
+
+      - name: Set EKS Kubeconfig 
+        run: "aws eks update-kubeconfig --region $AWS_REGION --name golang-api-demo"
+        
       - name: Get API URL
         run: |
           URL=$(kubectl get services -n default golang-api --output jsonpath='{.status.loadBalancer.ingress[0].hostname}')
