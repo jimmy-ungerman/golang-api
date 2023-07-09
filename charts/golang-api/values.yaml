@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/jimmy-ungerman/golang-api
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: sha-1c9efde
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""

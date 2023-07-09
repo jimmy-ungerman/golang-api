@@ -118,24 +118,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          tags: |
-            type=sha
+      - name: Get Short SHA
+        id: sha
+        run: echo "sha_short=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      - name: Check outputs
+        run: echo ${{ steps.vars.outputs.sha_short }}
 
-      - name: Setup Kubectl
-        uses: azure/setup-kubectl@v3
+      # - name: Setup Kubectl
+      #   uses: azure/setup-kubectl@v3
 
-      - name: Setup Helm
-        uses: azure/setup-helm@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Setup Helm
+      #   uses: azure/setup-helm@v3
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set EKS Kubeconfig 
-        run: "aws eks update-kubeconfig --region $AWS_REGION --name golang-api-demo"
+      # - name: Set EKS Kubeconfig 
+      #   run: "aws eks update-kubeconfig --region $AWS_REGION --name golang-api-demo"
       
-      - name: Deploy new Image
-        run: helm upgrade --install golang-api charts/golang-api --set image.tag=${{ steps.meta.outputs.tags }}
+      # - name: Deploy new Image
+      #   run: helm upgrade --install golang-api charts/golang-api --set image.tag=${{ steps.meta.outputs.tags }}
 
