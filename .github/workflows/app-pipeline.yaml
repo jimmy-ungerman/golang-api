@@ -34,7 +34,8 @@ jobs:
         uses: super-linter/super-linter@v5
         env:
           # Allows us to only lint when files have been changed
-          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_GO: true
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
