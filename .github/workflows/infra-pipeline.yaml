@@ -47,5 +47,5 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -input=false tf.plan
-      working-directory: infra # Use your environment folder
+      working-directory: infra
       shell: bash
