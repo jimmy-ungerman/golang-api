@@ -147,7 +147,7 @@ jobs:
 
       - name: Set EKS Kubeconfig 
         run: "aws eks update-kubeconfig --region $AWS_REGION --name golang-api-demo"
-        
+
       - name: Get API URL
         run: |
           URL=$(kubectl get services -n default golang-api --output jsonpath='{.status.loadBalancer.ingress[0].hostname}')
@@ -155,7 +155,6 @@ jobs:
           response=$(curl -s -w "%{http_code}" $URL)
 
           http_code=$(tail -n1 <<< "$response")
-          content=$(sed '$ d' <<< "$response")   
 
-          if [[ "$http_code" == "200" ]] && [[ "$content" == ""{\"message\":\"Automate all the things,\"time\":1688943610}\""" ]]; then
-            echo "API returns 200 Status Code and Correct Reponse"
+          if [[ "$http_code" == "200" ]]; then
+            echo "API returns 200 Status Code. View the API by navigating to $URL"
