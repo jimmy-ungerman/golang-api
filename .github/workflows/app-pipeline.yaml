@@ -110,7 +110,7 @@ jobs:
   deploy:
     name: Deploy newly built Image
     runs-on: ubuntu-latest
-    # needs: ["lint","test", "build-scan-push"]
+    needs: ["lint","test", "build-scan-push"]
 
     steps:
       - name: Checkout
