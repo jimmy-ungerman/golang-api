@@ -14,6 +14,9 @@ on:
       - main
     paths:
       - app/**
+  pull_request:
+    branches:
+      - main
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
@@ -148,16 +151,17 @@ jobs:
 
       - name: Test for API status code
         run: |
+          sleep 10
           URL=$(kubectl get services -n default golang-api --output jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 
           # Test the LB URL until it's responding
           attempt_counter=0
-          max_attempt=20
+          max_attempts=20
 
           until $(curl --output /dev/null --silent --head --fail $URL); do
               if [ ${attempt_counter} -eq ${max_attempts} ];then
-                echo "LB failed"
-                exit 1
+              echo "LB failed"
+              exit 1
               fi
 
               printf '.'
@@ -165,10 +169,14 @@ jobs:
               sleep 10
           done
 
+
           response=$(curl -s -w "%{http_code}" $URL)
 
           http_code=$(tail -n1 <<< "$response")
 
-          if [[ "$http_code" == "200" ]]; then
-            echo "API returns 200 Status Code. View the API by navigating to $URL"
+          # Provide the URL for the user to go to
+          status_code=$(curl --write-out %{http_code} --silent --output /dev/null $URL)
+
+          if [[ "$status_code" == "200" ]]; then
+              echo "API is running at $URL"
           fi
