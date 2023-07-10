@@ -1,0 +1,43 @@
+name: 'Terraform Destroy'
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Terraform Action to Perform'
+        type: choice
+        options:
+        - Terraform_apply
+        - Terraform_destroy
+jobs:
+  Terraform_Destroy:
+    name: Terraform Destroy
+    if: ${{ github.event.inputs.action == 'Terraform_destroy' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.2
+          terraform_wrapper: false
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      # Delete the helm releases to cleanup AWS LBs
+      - name: Delete Helm releases
+        run: helm ls --all --short | xargs -L1 helm delete
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform Destroy
+        id: destroy
+        working-directory: infra
+        run: terraform destroy -auto-approve
