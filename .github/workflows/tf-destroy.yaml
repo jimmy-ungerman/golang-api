@@ -44,8 +44,11 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
+        working-directory: infra
+        shell: bash
 
       - name: Terraform Destroy
         id: destroy
         working-directory: infra
+        shell: bash
         run: terraform destroy -auto-approve
