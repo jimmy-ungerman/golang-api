@@ -62,7 +62,6 @@ jobs:
 
   build-scan-push:
     name: Build Golang API Image
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     needs: ["lint","test"]
 
@@ -105,9 +104,10 @@ jobs:
           image: ${{ steps.meta.outputs.tags }}
           args: --severity-threshold=high
 
-      # Push if the scan succeeds
+      # Push if the scan succeeds and the push is to main
       - name: Push image to Registry
         uses: docker/build-push-action@v4
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         with:
           context: ./app
           push: true
