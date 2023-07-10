@@ -28,6 +28,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       
+      - name: Set EKS Kubeconfig 
+        run: "aws eks update-kubeconfig --region $AWS_REGION --name golang-api-demo"
+      
       # Delete the helm releases to cleanup AWS LBs
       - name: Delete Helm releases
         run: helm ls --all --short | xargs -L1 helm delete
