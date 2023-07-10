@@ -4,10 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: 'Terraform Action to Perform'
+        description: 'Terraform Destroy'
         type: choice
         options:
-        - Terraform_apply
         - Terraform_destroy
 jobs:
   Terraform_Destroy:
