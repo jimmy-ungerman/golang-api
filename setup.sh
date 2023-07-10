@@ -37,7 +37,9 @@ echo "Installing golang-api to cluster..."
 cd ../charts/golang-api
 helm upgrade --install golang-api . 
 
+# Sleep to make sure LB is created
 sleep 10
+
 # Get the URL for the LB Service
 URL=$(kubectl get services -n default golang-api --output jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 
@@ -57,11 +59,9 @@ until $(curl --output /dev/null --silent --head --fail $URL); do
 done
 
 # Provide the URL for the user to go to
+status_code=$(curl --write-out %{http_code} --silent --output /dev/null $URL)
 
-response=$(curl -s -w "%{http_code}" $URL)
-http_code=$(tail -n1 <<< "$response")
-
-if [[ "$http_code" == "200" ]]; then
+if [[ "$status_code" == "200" ]]; then
     echo "API is running at $URL"
 fi
 

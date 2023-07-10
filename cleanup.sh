@@ -2,6 +2,7 @@
 set -eu
 
 export AWS_PAGER=""
+
 # Ensure we have AWS Creds
 if aws sts get-caller-identity &> /dev/null; then
     user=$(aws sts get-caller-identity | jq -r '.Arn' )
@@ -13,9 +14,11 @@ else
 fi
 
 # Uninstall the Application to remove the LB from AWS
-if ! helm uninstall golang-api; then
+if ! helm ls --all --short | xargs -L1 helm delete; then
     echo "Golang API is already destroyed"
 fi
+
+# Sleep to ensure LB is deleted
 sleep 10
 
 # Run Terraform Destroy to tear down cluster

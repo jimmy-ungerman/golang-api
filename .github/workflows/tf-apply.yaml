@@ -1,6 +1,13 @@
 name: 'Terraform Infrastructure Setup'
 
 on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Terraform Apply'
+        type: choice
+        options:
+        - Terraform_Apply
   push:
     branches:
     - main
