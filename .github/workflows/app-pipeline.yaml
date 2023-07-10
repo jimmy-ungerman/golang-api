@@ -17,6 +17,8 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - app/**
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
