@@ -16,7 +16,19 @@ type apiResponse struct {
 func golangAPI(w http.ResponseWriter, r *http.Request){
 	var response = apiResponse{Message: "Automate all the things!", Time: time.Now().Unix()}
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	
+	body, err := json.Marshal(response)
+
+	// Error checking brought up by linting job
+	if err != nil {
+		panic(err)
+	}
+	_, err2 := w.Write(body)
+
+	// Error checking brought up by linting job
+	if err2 != nil {
+		panic(err2)
+	}
 }
 
 func handleRequests() {
