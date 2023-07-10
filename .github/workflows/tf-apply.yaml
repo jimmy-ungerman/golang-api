@@ -54,6 +54,12 @@ jobs:
         terraform plan -input=false -no-color -out tf.plan
       working-directory: infra
       shell: bash
+    
+    - name: Terraform Show
+      id: show
+      run: terraform show -no-color tf.plan 2>&1 > /tmp/plan.txt
+      working-directory: infra
+      shell: bash
 
     - name: Update PR with TF Plan
       uses: actions/github-script@v6
