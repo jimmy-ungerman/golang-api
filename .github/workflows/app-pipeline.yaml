@@ -20,19 +20,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - uses: actions/setup-go@v4
         with:
-          go-version: '1.20'
+          go-version: '1.20.5'
           cache: false
-
-      - name: cd to app
-        run: cd app && ls -la
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
           version: v1.53
+          working-directory: app
 
   # test:
   #   name: Test Golang API
@@ -47,6 +45,7 @@ jobs:
   #     - uses: actions/setup-go@v4
   #       with:
   #         go-version: 1.20.5
+  #         cache: false
 
   #     - name: Run API Tests
   #       run: cd app && go test -v
