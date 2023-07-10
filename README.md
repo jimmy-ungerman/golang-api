@@ -23,5 +23,7 @@ A `setup.sh` and `cleanup.sh` script have been provided to give a one time comma
 The Github Actions located in `.github/workflows` is a set of pipelines written to introduce CI/CD to the environment.
  
 `app-pipeline.yaml` contains all of the functionaility to test, build, scan, and deploy the Golang-API application.
-`tf-apply.yaml` contains all of the functionaility to apply the terraform code to our cloud provider and keep it up to date as the terraform code changes.
+
+`tf-apply.yaml` contains all of the functionaility to apply the terraform code to our cloud provider and keep it up to date as the terraform code changes. It works automatically with changes to the `infra` directory, but it can also be called manually to setup the infrastructure as you'd like.
+
 `tf-destroy.yaml` contains a manual job that will allow you to destroy the environment through the Github UI.
