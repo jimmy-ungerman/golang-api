@@ -39,7 +39,10 @@ jobs:
       
       # Delete the helm releases to cleanup AWS LBs
       - name: Delete Helm releases
-        run: helm ls --all --short | xargs -L1 helm delete
+        run: |
+          if ! helm ls --all --short | xargs -L1 helm delete; then
+            echo "Golang API is already destroyed"
+          fi
 
       - name: Terraform Init
         id: init
