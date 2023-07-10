@@ -6,5 +6,3 @@ terraform {
     region         = "us-east-1"
   }
 }
-
-# Adding a comment to trigger TF Init Part 2
