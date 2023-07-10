@@ -12,3 +12,5 @@ The following infrastructure is created to ensure that the API is able to run in
 * 3 Public Subnets (In three availability zones)
 * 3 Private Subnets (In three availabilty zones)
 * NAT Gateway for Internet Connectivity in the private subnets
+
+If running in your own environment, make sure to set the name of your s3 bucket in `backend.tf` to store your terraform state
