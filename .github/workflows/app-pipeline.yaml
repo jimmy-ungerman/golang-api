@@ -156,6 +156,7 @@ jobs:
 
       - name: Test for API status code
         run: |
+          echo "Waiting for LB to become Available..."
           sleep 10
           URL=$(kubectl get services -n default golang-api --output jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 
