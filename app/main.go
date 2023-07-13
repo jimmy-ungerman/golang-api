@@ -19,7 +19,7 @@ func golangAPI(w http.ResponseWriter, r *http.Request){
 	
 	body, err := json.Marshal(response)
 
-	// Error checking brought up by linting job
+	// Error checking brought up by linting job1
 	if err != nil {
 		panic(err)
 	}

@@ -29,7 +29,7 @@ jobs:
   lint:
     name: lint
     runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/main' && github.event_name == 'push'
+    if: ${{ (github.ref != 'refs/heads/main' && github.event_name == 'push') }}
     steps:
       - uses: actions/checkout@v3
 
@@ -47,7 +47,7 @@ jobs:
   test:
     name: Test Golang API
     runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/main' && github.event_name == 'push'
+    if: ${{ (github.ref != 'refs/heads/main' && github.event_name == 'push') }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -92,7 +92,7 @@ jobs:
 
       - name: Build Image for Scan
         uses: docker/build-push-action@v4
-        if: github.ref != 'refs/heads/main' && github.event_name == 'push'
+        if: ${{ (github.ref != 'refs/heads/main' && github.event_name == 'push') }}
         with:
           context: ./app
           push: false
@@ -111,7 +111,7 @@ jobs:
       # Push if the scan succeeds and the push is to main
       - name: Push image to Registry
         uses: docker/build-push-action@v4
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: ${{ (github.ref != 'refs/heads/main' && github.event_name == 'push') }}
         with:
           context: ./app
           push: true
