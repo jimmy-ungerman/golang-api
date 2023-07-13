@@ -29,7 +29,7 @@ func TestAPI(t *testing.T) {
 
 	Time := time.Now().Unix()
 	
-	expected := fmt.Sprintf(`{"message":"Automate all the things!","time":%d}`, Time)
+	expected := fmt.Sprintf(`{"message":"Automate all the things2!","time":%d}`, Time)
 	if test != expected {
 		t.Errorf("handler returned unexpected body: got %v want %v",
 			test, expected)
