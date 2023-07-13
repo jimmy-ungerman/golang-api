@@ -20,7 +20,6 @@ func golangAPI(w http.ResponseWriter, r *http.Request){
 	body, err := json.Marshal(response)
 
 	// Error checking brought up by linting job
-	// New comment to show the app pipeline
 	if err != nil {
 		panic(err)
 	}
