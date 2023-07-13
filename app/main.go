@@ -14,13 +14,12 @@ type apiResponse struct {
 }
 
 func golangAPI(w http.ResponseWriter, r *http.Request){
-	var response = apiResponse{Message: "Automate all the things2!", Time: time.Now().Unix()}
+	var response = apiResponse{Message: "Automate all the things!", Time: time.Now().Unix()}
 	w.Header().Set("Content-Type", "application/json")
 	
 	body, err := json.Marshal(response)
 
 	// Error checking brought up by linting job
-	// Add a comment to deply
 	if err != nil {
 		panic(err)
 	}
